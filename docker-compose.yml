@@ -1,0 +1,45 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: laravel_app
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8000:8000"
+        depends_on:
+            - db
+        networks:
+            - laravel-network
+
+    db:
+        image: postgres:13
+        container_name: postgres_db
+        environment:
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD}'
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        networks:
+            - laravel-network
+
+    adminer:
+        image: adminer
+        container_name: my-adminer
+        restart: always
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        networks:
+            - laravel-network
+
+networks:
+    laravel-network:
+        driver: bridge
+
+volumes:
+    postgres_data:
+        driver: local
