@@ -2,7 +2,10 @@ FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
+# ОБНОВЛЕННЫЙ БЛОК - МЫ ДОБАВЛЯЕМ Node.js и npm
 RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm \
     libpq-dev \
     git \
     zip \

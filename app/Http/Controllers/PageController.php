@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PageController extends Controller
 {
     public function about()
     {
-        return view('pages.about');
+        return Inertia::render('About');
     }
 }
