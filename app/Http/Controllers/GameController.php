@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\UpdateGameRequest;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -15,7 +17,7 @@ class GameController extends Controller
         if (Auth::check() && Auth::user()->isAdmin()) {
             $games = Game::latest()->paginate(10);
         } else {
-            $games = Gane::available()->latest()->paginate(10);
+            $games = Game::available()->latest()->paginate(10);
         }
         return view('games.index', ['games' => $games]);
     }
